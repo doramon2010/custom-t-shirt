@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Đăng nhập</title>
+<style>
+body{
+    font-family:sans-serif;
+    background: url("https://media.anhp.vn/files/2025/09MH%20138.png") no-repeat center/cover;
+    display:flex;justify-content:center;align-items:center;height:100vh;
+}
+.box{background:#fff;padding:30px;border-radius:15px;width:320px;}
+input,button{width:100%;padding:10px;margin:8px 0;}
+button{background:#4facfe;color:#fff;border:none;}
+a{display:block;text-align:center;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Đăng nhập</h2>
+<input id="name" placeholder="Tên">
+<input id="password" type="password" placeholder="Mật khẩu">
+<button onclick="login()">Đăng nhập</button>
+<p id="msg"></p>
+<a href="register.html">Chưa có tài khoản? Đăng ký</a>
+</div>
+
+<script>
+function login(){
+let name=get("name"),pass=get("password");
+
+let users=JSON.parse(localStorage.getItem("users"))||[];
+
+let user=users.find(u=>u.name===name&&u.password===pass);
+
+if(!user){msg("Sai thông tin");return;}
+
+localStorage.setItem("currentUser",JSON.stringify(user));
+
+window.location.href="index.html";
+}
+
+function get(id){return document.getElementById(id).value.trim();}
+function msg(t){document.getElementById("msg").innerText=t;}
+</script>
+
+</body>
+</html>

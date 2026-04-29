@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Đăng ký</title>
+<style>
+body{
+    font-family:sans-serif;
+    background: url("https://media.anhp.vn/files/2025/09MH%20138.png") no-repeat center/cover;
+    display:flex;justify-content:center;align-items:center;height:100vh;
+}
+.box{background:#fff;padding:30px;border-radius:15px;width:320px;}
+input,button{width:100%;padding:10px;margin:8px 0;}
+button{background:#ff758c;color:#fff;border:none;}
+a{display:block;text-align:center;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Đăng ký</h2>
+<input id="name" placeholder="Tên">
+<input id="phone" placeholder="SĐT">
+<input id="email" placeholder="Gmail">
+<input id="password" type="password" placeholder="Mật khẩu">
+<button onclick="register()">Đăng ký</button>
+<p id="msg"></p>
+<a href="login.html">Đã có tài khoản? Đăng nhập</a>
+</div>
+
+<script>
+function register(){
+let name=get("name"),phone=get("phone"),email=get("email"),pass=get("password");
+
+if(!name||!phone||!email||!pass){msg("Nhập đủ thông tin");return;}
+
+let users=JSON.parse(localStorage.getItem("users"))||[];
+
+if(users.find(u=>u.phone===phone)){msg("SĐT đã tồn tại");return;}
+
+users.push({name,phone,email,password:pass});
+localStorage.setItem("users",JSON.stringify(users));
+
+localStorage.setItem("currentUser",JSON.stringify({name}));
+
+window.location.href="login.html";
+}
+
+function get(id){return document.getElementById(id).value.trim();}
+function msg(t){document.getElementById("msg").innerText=t;}
+</script>
+
+</body>
+</html>
